@@ -19,6 +19,10 @@ namespace MessageBoard.Controllers
     public async Task<ActionResult<IEnumerable<User>>> Get(string name)
     {
       IQueryable<User> query = _db.Users.AsQueryable();
+      if (name != null)
+      {
+        query = query.Where(us => us.Name == name);
+      }
       return await query.ToListAsync();
     }
 

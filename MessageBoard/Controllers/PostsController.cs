@@ -16,9 +16,18 @@ namespace MessageBoard.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Post>>> Get()
+    public async Task<ActionResult<IEnumerable<Post>>> Get(int userId, int threadId)
     {
       IQueryable<Post> query = _db.Posts.AsQueryable();
+      if (userId != null)
+      {
+        query = query.Where(po => po.UserId == userId);
+      }
+      if (threadId != null)
+      {
+        query = query.Where(po => po.ThreadsId == threadId);
+      }
+
       return await query.ToListAsync();
     }
 

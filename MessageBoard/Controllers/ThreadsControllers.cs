@@ -17,9 +17,17 @@ namespace MessageBoard.Controllers
 
     // GET api/threads
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Threads>>> Get(string title)
+    public async Task<ActionResult<IEnumerable<Threads>>> Get(string title, int userId)
     {
       IQueryable<Threads> query = _db.Threads.AsQueryable();
+      if (title != null)
+      {
+        query = query.Where(th => th.Title == title);
+      }
+      if (userId != null)
+      {
+        query = query.Where(th => th.UserId == userId);
+      }
       return await query.ToListAsync();
     }
 
