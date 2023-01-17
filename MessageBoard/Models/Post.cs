@@ -13,5 +13,4 @@ namespace MessageBoard.Models
     [Required]
     public int PostId { get; set; }
   }
-
 }
