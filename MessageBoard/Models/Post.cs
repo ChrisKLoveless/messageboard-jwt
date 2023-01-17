@@ -4,6 +4,7 @@ namespace MessageBoard.Models
 {
   public class Post 
   {
+    [Required]
     public string Body { get; set; }
     [Required]
     public int UserId { get; set; }
