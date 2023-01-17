@@ -14,7 +14,7 @@ namespace MessageBoard.Controllers
     {
       _db = db;
     }
-    
+
     // GET api/threads
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Threads>>> Get(string title)
@@ -24,25 +24,75 @@ namespace MessageBoard.Controllers
     }
 
     // GET: api/Threads/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Threads>> GetThreads(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Threads>> GetThreads(int id)
+    {
+      Threads threads = await _db.Threads.FindAsync(id);
+
+      if (threads == null)
+      {
+        return NotFound();
+      }
+
+      return threads;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Threads>> Post(Threads threads)
+    {
+      _db.Threads.Add(threads);
+      await _db.SaveChangesAsync();
+      return CreatedAtAction(nameof(GetThreads), new { id = threads.ThreadsId }, threads);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Threads thread)
+    {
+      if (id != thread.ThreadsId)
+      {
+        return BadRequest();
+      }
+
+      _db.Threads.Update(thread);
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!ThreadExists(id))
         {
-            Threads threads = await _db.Threads.FindAsync(id);
-
-            if (threads == null)
-            {
-                return NotFound();
-            }
-
-            return threads;
+          return NotFound();
         }
-
-        [HttpPost]
-        public async Task<ActionResult<Threads>> Post(Threads threads)
+        else
         {
-          _db.Threads.Add(threads);
-          await _db.SaveChangesAsync();
-          return CreatedAtAction(nameof(GetThreads), new { id = threads.ThreadsId }, threads);
+          throw;
         }
+      }
+
+      return NoContent();
+    }
+
+    private bool ThreadExists(int id)
+    {
+      return _db.Threads.Any(e => e.ThreadsId == id);
+    }
+
+    // DELETE: api/Threads/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteThread(int id)
+    {
+      Threads thread = await _db.Threads.FindAsync(id);
+      if (thread == null)
+      {
+        return NotFound();
+      }
+
+      _db.Threads.Remove(thread);
+      await _db.SaveChangesAsync();
+
+      return NoContent();
+    }
   }
 }
