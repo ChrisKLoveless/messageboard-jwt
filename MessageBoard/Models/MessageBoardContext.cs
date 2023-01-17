@@ -5,7 +5,7 @@ namespace MessageBoard.Models
   public class MessageBoardContext : DbContext
   {
     public DbSet<Post> Posts { get; set; }
-    public DbSet<Thread> Threads { get; set; }
+    public DbSet<Threads> Threads { get; set; }
     public DbSet<User> Users { get; set; }
 
     public MessageBoardContext(DbContextOptions<MessageBoardContext> options) : base(options)
@@ -19,6 +19,12 @@ namespace MessageBoard.Models
         new User { UserId = 1, Name = "Chris"},
         new User { UserId = 2, Name = "Yoonis"},
         new User { UserId = 3, Name = "Robert"}
+      );
+      builder.Entity<Threads>()
+      .HasData(
+        new Threads { UserId = 1, ThreadsId = 1, Title = "News"},
+        new Threads { UserId = 2, ThreadsId = 2, Title = "Memes"},
+        new Threads { UserId = 3, ThreadsId = 3, Title = "Sports"}
       );
     }
   }

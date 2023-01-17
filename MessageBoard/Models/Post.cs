@@ -6,7 +6,7 @@ namespace MessageBoard.Models
 
     public int UserId { get; set; }
 
-    public int ThreadId { get; set; }
+    public int ThreadsId { get; set; }
 
     public int PostId { get; set; }
 

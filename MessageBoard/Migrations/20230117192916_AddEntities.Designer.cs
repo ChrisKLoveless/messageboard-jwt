@@ -2,6 +2,7 @@
 using MessageBoard.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MessageBoard.Migrations
 {
     [DbContext(typeof(MessageBoardContext))]
-    partial class MessageBoardContextModelSnapshot : ModelSnapshot
+    [Migration("20230117192916_AddEntities")]
+    partial class AddEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,26 +55,6 @@ namespace MessageBoard.Migrations
                     b.HasKey("ThreadsId");
 
                     b.ToTable("Threads");
-
-                    b.HasData(
-                        new
-                        {
-                            ThreadsId = 1,
-                            Title = "News",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            ThreadsId = 2,
-                            Title = "Memes",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            ThreadsId = 3,
-                            Title = "Sports",
-                            UserId = 3
-                        });
                 });
 
             modelBuilder.Entity("MessageBoard.Models.User", b =>
