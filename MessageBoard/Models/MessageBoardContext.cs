@@ -8,6 +8,8 @@ namespace MessageBoard.Models
     public DbSet<Threads> Threads { get; set; }
     public DbSet<User> Users { get; set; }
 
+    public DbSet<AppUser> AppUsers { get; set; }
+
     public MessageBoardContext(DbContextOptions<MessageBoardContext> options) : base(options)
     {
     }
@@ -32,6 +34,11 @@ namespace MessageBoard.Models
         new Post { UserId = 2, PostId = 2, ThreadsId = 2, Body = "Memes"},
         new Post { UserId = 3, PostId = 3, ThreadsId = 3, Body = "Sports"}
       );
+      // builder.Entity<AppUser>()
+      // .HasData(
+      //   new AppUser() {Username = "chris", Password = "chris123"},
+      //   new AppUser() {Username = "david", Password = "david123"}
+      // );
     }
   }
 }
